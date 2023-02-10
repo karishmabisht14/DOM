@@ -23,13 +23,25 @@ function addItems(e){
     //append li to form item input value
     li.appendChild(document.createTextNode(document.querySelector('#item').value));
     //append li to form description input value
-    li.appendChild(document.createTextNode(document.querySelector('#description').value));
+    li.appendChild(document.createTextNode(" " + document.querySelector('#description').value));
+
+    //create a delete button
+    const deleteBtn = document.createElement('button');
+
+    //add classname
+    deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+
+    //create text node and append it
+    deleteBtn.appendChild(document.createTextNode('X'));
+
+    //append it to the itemsList
+    li.appendChild(deleteBtn);
 
     //create edit button
     const editBtn = document.createElement('button');
 
     //add classname
-    editBtn.className = 'btn btn-primary btn-sm float-right edit';
+    editBtn.className = 'btn btn-primary btn-sm float-right mx-1 edit';
 
     //create span for the edit button
     const span = document.createElement('span')
@@ -42,18 +54,6 @@ function addItems(e){
 
     //append this editBtn to li
     li.appendChild(editBtn);
-
-    //create a delete button
-    const deleteBtn = document.createElement('button');
-
-    //add classname
-    deleteBtn.className = 'btn btn-danger btn-sm float-right mx-1 delete';
-
-    //create text node and append it
-    deleteBtn.appendChild(document.createTextNode('X'));
-
-    //append it to the itemsList
-    li.appendChild(deleteBtn);
 
     //append itemsList to new li
     itemsList.appendChild(li);
@@ -88,7 +88,7 @@ function filterItems(e){
     Array.from(items).forEach(function(item){
         let itemName = item.firstChild.textContent;
         let itemDesc = item.childNodes[1].textContent;
-        console.log(itemDesc);
+        
         if(itemName.toLowerCase().indexOf(text) != -1 || itemDesc.toLowerCase().indexOf(text) != -1){
             item.style.display = 'block';
         } else {
