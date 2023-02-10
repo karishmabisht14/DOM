@@ -1,12 +1,14 @@
 //fetching the ids pf form and ul tag  
 const form = document.querySelector('#addForm');
 const itemsList = document.querySelector('#items');
-
+const filter = document.querySelector('#filter');
 
 //form submit event
 form.addEventListener('submit', addItems);
 // delete items event
 itemsList.addEventListener('click', deleteItems);
+// filter event
+filter.addEventListener('keyup', filterItems);
 
 //create function addItems
 function addItems(e){
@@ -18,8 +20,10 @@ function addItems(e){
     //add classname
     li.className = 'list-group-item';
 
-    //append li to form input value
+    //append li to form item input value
     li.appendChild(document.createTextNode(document.querySelector('#item').value));
+    //append li to form description input value
+    li.appendChild(document.createTextNode(document.querySelector('#description').value));
 
     //create edit button
     const editBtn = document.createElement('button');
@@ -35,7 +39,6 @@ function addItems(e){
 
     //append this span to editBtn
     editBtn.appendChild(span);
-    console.log(editBtn);
 
     //append this editBtn to li
     li.appendChild(editBtn);
@@ -57,6 +60,7 @@ function addItems(e){
 
     //remove the value from the form input
     document.querySelector('#item').value = '';
+    document.querySelector('#description').value = '';
 
 }
 
@@ -70,3 +74,26 @@ function deleteItems(e){
     }
 }
 
+//create function filterItems
+function filterItems(e){
+
+    //convert text to lowercase
+    let text = e.target.value.toLowerCase();
+    
+    
+    //get the li elements
+    let items = document.querySelectorAll('li');
+
+    //convert it into array
+    Array.from(items).forEach(function(item){
+        let itemName = item.firstChild.textContent;
+        let itemDesc = item.childNodes[1].textContent;
+        console.log(itemDesc);
+        if(itemName.toLowerCase().indexOf(text) != -1 || itemDesc.toLowerCase().indexOf(text) != -1){
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+}
